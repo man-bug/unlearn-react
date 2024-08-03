@@ -38,9 +38,13 @@ WORKDIR /root/
 COPY --from=builder /app/main .
 COPY --from=builder /app/static ./static
 COPY --from=builder /app/internal/templates ./internal/templates
+COPY --from=builder /app/start.sh .
+
+# Make sure the script is executable
+RUN chmod +x ./start.sh
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Command to run the executable with logging
-CMD ["/bin/sh", "-c", "echo 'Starting application...' && ./main 2>&1 | tee /var/log/app.log"]
+# Command to run the start script
+CMD ["./start.sh"]
