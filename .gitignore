@@ -1,0 +1,15 @@
+/vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+.idea/
+.vscode/
+tailwindcss
+/tmp/
+*.binary
+node_modules/
+static/css/tailwind.output.css

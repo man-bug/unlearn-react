@@ -1,0 +1,18 @@
+{{define "home"}}
+<div class="bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-4">Welcome to Go + HTMX</h1>
+    <p class="mb-4">This counter is powered by Go and HTMX. No React required.</p>
+    {{template "counter" .}}
+    <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        hx-post="/increment"
+        hx-target="#counter"
+    >
+        Increment
+    </button>
+</div>
+{{end}}
+
+{{define "counter"}}
+<p id="counter" class="text-2xl font-bold mb-4">Counter: {{.}}</p>
+{{end}}
