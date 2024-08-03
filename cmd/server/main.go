@@ -1,6 +1,7 @@
 package main
 
 import (
+    "fmt"
     "log"
     "net/http"
     "os"
@@ -29,9 +30,9 @@ func main() {
     // Log the port we're about to listen on
     log.Printf("Attempting to start server on port %s", port)
 
-    // Start the server
-    log.Printf("Server starting on :%s", port)
-    err := http.ListenAndServe(":"+port, nil)
+    // Start the server, bind to all interfaces
+    log.Printf("Server starting on 0.0.0.0:%s", port)
+    err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", port), nil)
     if err != nil {
         log.Fatalf("Failed to start server: %v", err)
     }
