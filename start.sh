@@ -19,8 +19,5 @@ else
     echo "PORT is set to $PORT"
 fi
 
-echo "Listing /app directory contents:"
-ls -la /app
-
 echo "Starting application..."
 ./main 2>&1 | tee /var/log/app.log

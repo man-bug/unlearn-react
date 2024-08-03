@@ -2,7 +2,7 @@
 FROM golang:1.22 as builder
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /root
 
 # Copy go mod file
 COPY go.mod ./
@@ -32,13 +32,14 @@ FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /root/
+# Set the working directory
+WORKDIR /root
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/main .
-COPY --from=builder /app/static ./static
-COPY --from=builder /app/internal ./internal
-COPY --from=builder /app/start.sh .
+COPY --from=builder /root/main .
+COPY --from=builder /root/static ./static
+COPY --from=builder /root/internal ./internal
+COPY --from=builder /root/start.sh .
 
 # Make sure the script is executable
 RUN chmod +x ./start.sh

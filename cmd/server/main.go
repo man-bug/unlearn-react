@@ -31,6 +31,13 @@ func main() {
     })
     http.HandleFunc("/increment", handlers.IncrementHandler)
 
+    // simple health check endpoint
+    http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+        log.Println("Received health check request")
+        w.WriteHeader(http.StatusOK)
+        w.Write([]byte("OK"))
+    })
+
     // Get port from environment variable
     port := os.Getenv("PORT")
     if port == "" {
