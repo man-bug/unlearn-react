@@ -12,12 +12,23 @@ import (
 func main() {
     log.Println("Application starting...")
 
+    // Log current working directory
+    wd, err := os.Getwd()
+    if err != nil {
+        log.Printf("Error getting working directory: %v", err)
+    } else {
+        log.Printf("Current working directory: %s", wd)
+    }
+
     // Serve static files
     fs := http.FileServer(http.Dir("static"))
     http.Handle("/static/", http.StripPrefix("/static/", fs))
 
     // Set up routes
-    http.HandleFunc("/", handlers.HomeHandler)
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        log.Printf("Received request for path: %s", r.URL.Path)
+        handlers.HomeHandler(w, r)
+    })
     http.HandleFunc("/increment", handlers.IncrementHandler)
 
     // Get port from environment variable
@@ -32,7 +43,7 @@ func main() {
 
     // Start the server, bind to all interfaces
     log.Printf("Server starting on 0.0.0.0:%s", port)
-    err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", port), nil)
+    err = http.ListenAndServe(fmt.Sprintf("0.0.0.0:%s", port), nil)
     if err != nil {
         log.Fatalf("Failed to start server: %v", err)
     }
