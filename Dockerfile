@@ -37,7 +37,7 @@ WORKDIR /root/
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/main .
 COPY --from=builder /app/static ./static
-COPY --from=builder /app/internal/templates ./internal/templates
+COPY --from=builder /app/internal ./internal
 COPY --from=builder /app/start.sh .
 
 # Make sure the script is executable
